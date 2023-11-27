@@ -46,3 +46,12 @@ case "$OPTION" in
 4)
   source App-Installation.sh
   ;;
+
+0)
+  echo "Exiting"
+  ;;
+
+*)
+  echo "Invalid command !"
+  ;;
+esac
