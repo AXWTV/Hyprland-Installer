@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# https://github.com/AXWTV
 # https://github.com/JaKooLit
 
 # Check if running as root. If root, script will exit
