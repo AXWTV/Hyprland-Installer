@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# https://github.com/AXWTV
-# https://github.com.Ja.KooLit
+# https://github.com/JaKooLit
 
 # edit your packages desired here. 
 # WARNING! If you remove packages here, dotfiles may not work properly.
@@ -21,12 +20,9 @@ hypr_package=(
   gvfs
   gvfs-mtp
   ImageMagick
-  lsd
   jq
   kitty
-  vim
-  python3-neovim
-  neovim
+  kvantum
   nano
   network-manager-applet
   openssl
@@ -37,6 +33,7 @@ hypr_package=(
   python3-requests
   python3-pip
   qt5ct
+  qt6-qtsvg
   rofi-wayland
   slurp
   swappy
@@ -44,6 +41,7 @@ hypr_package=(
   waybar
   wget
   wl-clipboard
+  wlogout
   xdg-user-dirs
   yad
 )

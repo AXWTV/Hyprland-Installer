@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# https://github.com/AXWTV
 # https://github.com/JaKooLit
 
 # Check if running as root. If root, script will exit
@@ -13,18 +12,23 @@ clear
 
 echo " 
 
-▄▀▄ ▀▄▀ █ █ █ ▀█▀ █ █ █▀▄ █▀█ ▀█▀ █▀▀ 
-█▀█ █ █ ▀▄▀▄▀  █  ▀▄▀ █▄▀ █▄█  █  ▄██
-                                     
-
+ █████╗ ██╗  ██╗██╗    ██╗████████╗██╗   ██╗
+██╔══██╗╚██╗██╔╝██║    ██║╚══██╔══╝██║   ██║
+███████║ ╚███╔╝ ██║ █╗ ██║   ██║   ██║   ██║
+██╔══██║ ██╔██╗ ██║███╗██║   ██║   ╚██╗ ██╔╝
+██║  ██║██╔╝ ██╗╚███╔███╔╝   ██║    ╚████╔╝ 
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝    ╚═╝     ╚═══╝  
+                                                                                                          
 "
 
 # Welcome message
-echo "$(tput setaf 6)WELCOME! This is AXWTV's Fedora-Hyprland Install Script!$(tput sgr0)"
+echo "$(tput setaf 6)Welcome to JaKooLit's Fedora-Hyprland Install Script!$(tput sgr0)"
 echo
 echo "$(tput setaf 166)ATTENTION: Run a full system update and Reboot first!! (Highly Recommended) $(tput sgr0)"
 echo
 echo "$(tput setaf 3)NOTE: You will be required to answer some questions during the installation! $(tput sgr0)"
+echo
+echo "$(tput setaf 3)NOTE: If you are installing on a VM, ensure to enable 3D acceleration else Hyprland wont start! $(tput sgr0)"
 echo
 
 read -p "$(tput setaf 6)Would you like to proceed? (y/n): $(tput sgr0)" proceed
@@ -193,20 +197,18 @@ clear
 
 printf "\n${OK} Yey! Installation Completed.\n"
 printf "\n"
-printf "\n${NOTE} NOTICE TO NVIDIA OWNERS! IT's a MUST for your to reboot your system\n"
 sleep 2
 printf "\n${NOTE} You can start Hyprland by typing Hyprland (IF SDDM is not installed) (note the capital H!).\n"
 printf "\n"
 printf "\n${NOTE} It is highly recommended to reboot your system.\n\n"
-read -n1 -rep "${CAT} Would you like to reboot now? (y,n)" HYP
 
-if [[ $HYP =~ ^[Yy]$ ]]; then
+read -rp "${CAT} Would you like to reboot now? (y/n): " HYP
+
+if [[ "$HYP" =~ ^[Yy]$ ]]; then
     if [[ "$nvidia" == "Y" ]]; then
         echo "${NOTE} NVIDIA GPU detected. Rebooting the system..."
         systemctl reboot
     else
         systemctl reboot
-    
     fi    
 fi
-
