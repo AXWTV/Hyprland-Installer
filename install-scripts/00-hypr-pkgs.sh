@@ -24,6 +24,9 @@ hypr_package=(
   kitty
   kvantum
   nano
+  vim
+  nvim
+  lsd
   network-manager-applet
   openssl
   pavucontrol
