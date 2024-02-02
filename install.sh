@@ -70,6 +70,7 @@ sddm=""
 thunar=""
 xdph=""
 zsh=""
+vgpt=""
 
 # Define the directory where your scripts are located
 script_directory=install-scripts
@@ -140,6 +141,8 @@ ask_yes_no "-Do you want to install nwg-look? (GTK Theming app - lxappearance-li
 printf "\n"
 ask_yes_no "-Do you want to copy Hyprland dotfiles?" dots
 printf "\n"
+ask_yes_no "-Do you want to install vgpt(Voice Generative Pre-trained Transformer)?" vgpt
+printf "\n"
 
 # Ensuring all in the scripts folder are made executable
 chmod +x install-scripts/*
@@ -191,7 +194,10 @@ fi
 
 if [ "$dots" == "Y" ]; then
     execute_script "dotfiles.sh"
+fi
 
+if [ "$vgpt" == "Y" ]; then
+    execute_script "install-vgpt.sh"
 fi
 
 clear
