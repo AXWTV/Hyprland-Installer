@@ -23,6 +23,7 @@ hypr_package=(
   jq
   kitty
   kvantum
+  nautilus
   nano
   vim
   nvim
