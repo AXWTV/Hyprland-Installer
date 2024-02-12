@@ -13,6 +13,10 @@ RESET=$(tput sgr0)
 # Create a log file
 LOG="install-$(date +%d-%H%M%S)_vgpt.log"
 
+# Installing tgpt
+curl -sSL https://raw.githubusercontent.com/aandrew-me/tgpt/main/install | bash -s /usr/local/bin || echo -e "${ERROR} Failed to install Tgpt"
+
+
 # Create a directory for languages
 mkdir -p ~/.local/share/vtt/english/ || echo -e "${ERROR} Failed to create directory for languages"
 
