@@ -1,21 +1,7 @@
 #!/bin/bash
 
-# Set some colors for output messages
-OK="$(tput setaf 2)[OK]$(tput sgr0)"
-ERROR="$(tput setaf 1)[ERROR]$(tput sgr0)"
-NOTE="$(tput setaf 3)[NOTE]$(tput sgr0)"
-WARN="$(tput setaf 166)[WARN]$(tput sgr0)"
-CAT="$(tput setaf 6)[ACTION]$(tput sgr0)"
-ORANGE=$(tput setaf 166)
-YELLOW=$(tput setaf 3)
-RESET=$(tput sgr0)
-
-# Create a log file
+# Set the log file
 LOG="install-$(date +%d-%H%M%S)_vgpt.log"
-
-# Installing tgpt
-curl -sSL https://raw.githubusercontent.com/aandrew-me/tgpt/main/install | bash -s /usr/local/bin || echo -e "${ERROR} Failed to install Tgpt"
-
 
 # Create a directory for languages
 mkdir -p ~/.local/share/vtt/english/ || echo -e "${ERROR} Failed to create directory for languages"
@@ -35,9 +21,6 @@ wget -q $url -O piper.tar.gz || echo -e "${ERROR} Failed to download piper binar
 # Extract the downloaded tarball to the current directory
 tar -xzf piper.tar.gz || echo -e "${ERROR} Failed to extract piper binary"
 
-# Remove the downloaded tarball
-rm piper.tar.gz || echo -e "${ERROR} Failed to remove piper binary"
-
 cd piper || echo -e "${ERROR} Failed to change directory to piper"
 
 # Download the ONNX models for English
@@ -55,4 +38,13 @@ pip3 -v install vosk || echo -e "${ERROR} Failed to install vosk"
 sudo ln -sf ~/.local/bin/vosk-transcriber /usr/local/bin || echo -e "${ERROR} Failed to create symbolic link for vosk-transcriber"
 
 # Download the Vosk models for English and Indian English
-wget -q https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip || echo -e "${ERROR} Failed to download vosk-model-
+wget -q https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip || echo -e "${ERROR} Failed to download vosk-model"
+
+# Unzip the downloaded Vosk models
+unzip vosk-model-small-en-us-0.15.zip -d ~/.local/share/vtt/english/ || echo -e "${ERROR} Failed to unzip vosk-model"
+
+# Remove the downloaded Vosk models zip file
+rm vosk-model-small-en-us-0.15.zip || echo -e "${ERROR} Failed to remove vosk-model"
+
+# Install tgpt
+curl -sSL https://raw.githubusercontent.com/aandrew-me/tgpt/main/install | bash -s /usr/local/bin || echo -e "${ERROR} Failed to install Tgpt"
