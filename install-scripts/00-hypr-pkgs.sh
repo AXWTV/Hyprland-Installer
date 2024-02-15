@@ -11,7 +11,8 @@ Extra=(
 )
 
 # packages neeeded
-hypr_package=( 
+hypr_package=(
+  alacritty
   curl
   git
   grim
@@ -21,8 +22,10 @@ hypr_package=(
   jq
   kitty
   kvantum
+  lsd
   nano
   network-manager-applet
+  neovim
   openssl
   pamixer
   pavucontrol
@@ -39,6 +42,7 @@ hypr_package=(
   swappy
   swayidle
   SwayNotificationCenter
+  vim
   waybar
   wget
   wl-clipboard

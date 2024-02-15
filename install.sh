@@ -76,6 +76,7 @@ thunar=""
 xdph=""
 zsh=""
 vgpt=""
+p10k=""
 
 # Define the directory where your scripts are located
 script_directory=install-scripts
@@ -146,6 +147,9 @@ ask_yes_no "-Installing on ASUS ROG Laptops?" rog
 printf "\n"
 ask_yes_no "-Do you want to download and install pre-configured Hyprland dotfiles?" dots
 printf "\n"
+ask_yes_no "-Do you want to PowerLevel10K?" p10k
+printf "\n"
+
 ask_yes_no "-Do you want to install vgpt (a voice command chat-gpt included with the dotfiles)?" vgpt
 printf "\n"
 
@@ -199,6 +203,10 @@ fi
 
 if [ "$vgpt" == "Y" ]; then
     execute_script "vgpt.sh"
+fi
+
+if [ "$p10k" == "Y" ]; then
+    execute_script "p10k.sh"
 fi
 
 execute_script "InputGroup.sh"
