@@ -1,7 +1,8 @@
 #!/bin/bash
-
-# https://github.com/JaKooLit
 # https://github.com/AXWTV
+# https://github.com/JaKooLit
+# Created by: JaKooLit
+# Modified by: AXWTV
 
 # Check if running as root. If root, script will exit
 if [[ $EUID -eq 0 ]]; then
@@ -11,19 +12,18 @@ fi
 
 clear
 
-echo " 
-
- █████╗ ██╗  ██╗██╗    ██╗████████╗██╗   ██╗
-██╔══██╗╚██╗██╔╝██║    ██║╚══██╔══╝██║   ██║
-███████║ ╚███╔╝ ██║ █╗ ██║   ██║   ██║   ██║
-██╔══██║ ██╔██╗ ██║███╗██║   ██║   ╚██╗ ██╔╝
-██║  ██║██╔╝ ██╗╚███╔███╔╝   ██║    ╚████╔╝ 
-╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝    ╚═╝     ╚═══╝  
-                                                                                                          
-"
+printf "\n%.0s" {1..3}  
+echo " █████╗ ██╗  ██╗██╗    ██╗████████╗██╗   ██╗"
+echo "██╔══██╗╚██╗██╔╝██║    ██║╚══██╔══╝██║   ██║"
+echo "███████║ ╚███╔╝ ██║ █╗ ██║   ██║   ██║   ██║"
+echo "██╔══██║ ██╔██╗ ██║███╗██║   ██║   ╚██╗ ██╔╝"
+echo "██║  ██║██╔╝ ██╗╚███╔███╔╝   ██║    ╚████╔╝ "
+echo "╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝    ╚═╝     ╚═══╝  "
+echo "                                            "
+printf "\n%.0s" {1..2} 
 
 # Welcome message
-echo "$(tput setaf 6)Welcome to AXWTV's Fedora-Hyprland Install Script!$(tput sgr0)"
+echo "$(tput setaf 6)Welcome to JaKooLit's Fedora-Hyprland Install Script!$(tput sgr0)"
 echo
 echo "$(tput setaf 166)ATTENTION: Run a full system update and Reboot first!! (Highly Recommended) $(tput sgr0)"
 echo
@@ -37,6 +37,11 @@ read -p "$(tput setaf 6)Would you like to proceed? (y/n): $(tput sgr0)" proceed
 if [ "$proceed" != "y" ]; then
     echo "Installation aborted."
     exit 1
+fi
+
+# Create Directory for Install Logs
+if [ ! -d Install-Logs ]; then
+    mkdir Install-Logs
 fi
 
 # Set some colors for output messages
@@ -121,27 +126,27 @@ execute_script() {
 
 # Collect user responses to all questions
 printf "\n"
-ask_yes_no "-Do you have nvidia gpu?" nvidia
+ask_yes_no "-Do you have any nvidia gpu in your system?" nvidia
 printf "\n"
-ask_yes_no "-Install GTK themes (required for Dark/Light function)?" gtk_themes
+ask_yes_no "-Install GTK themes? (required for Dark/Light function)" gtk_themes
 printf "\n"
 ask_yes_no "-Do you want to configure Bluetooth?" bluetooth
 printf "\n"
 ask_yes_no "-Do you want to install Thunar file manager?" thunar
 printf "\n"
-ask_yes_no "-Installing on Asus ROG Laptops?" rog
+ask_yes_no "-Install & configure SDDM log-in Manager plus (OPTIONAL) SDDM Theme?" sddm
 printf "\n"
-ask_yes_no "-Install and configure SDDM log-in Manager?" sddm
+ask_yes_no "-Install XDG-DESKTOP-PORTAL-HYPRLAND? (for proper Screen Share ie OBS)" xdph
 printf "\n"
-ask_yes_no "Install XDG-DESKTOP-PORTAL-HYPRLAND? (for proper Screen Share ie OBS)" xdph
+ask_yes_no "-Install zsh & oh-my-zsh plus (OPTIONAL) pokemon-colorscripts?" zsh
 printf "\n"
-ask_yes_no "-Do you want to install zsh and oh-my-zsh?" zsh
+ask_yes_no "-Install nwg-look? (Theming app / lxappearance-like) WARNING Package takes abit long to install" nwg
 printf "\n"
-ask_yes_no "-Do you want to install nwg-look? (GTK Theming app - lxappearance-like)" nwg
+ask_yes_no "-Installing on ASUS ROG Laptops?" rog
 printf "\n"
-ask_yes_no "-Do you want to copy Hyprland dotfiles?" dots
+ask_yes_no "-Do you want to download and install pre-configured Hyprland dotfiles?" dots
 printf "\n"
-ask_yes_no "-Do you want to install vgpt(Voice Generative Pre-trained Transformer)?" vgpt
+ask_yes_no "-Do you want to install vgpt (a voice command chat-gpt included with the dotfiles)?" vgpt
 printf "\n"
 
 # Ensuring all in the scripts folder are made executable
@@ -172,10 +177,6 @@ if [ "$thunar" == "Y" ]; then
     execute_script "thunar.sh"
 fi
 
-if [ "$rog" == "Y" ]; then
-    execute_script "rog.sh"
-fi
-
 if [ "$sddm" == "Y" ]; then
     execute_script "sddm.sh"
 fi
@@ -188,16 +189,23 @@ if [ "$zsh" == "Y" ]; then
     execute_script "zsh.sh"
 fi
 
+if [ "$rog" == "Y" ]; then
+    execute_script "rog.sh"
+fi
+
 if [ "$nwg" == "Y" ]; then
     execute_script "nwg-look.sh"
 fi
 
-if [ "$dots" == "Y" ]; then
-    execute_script "dotfiles.sh"
+if [ "$vgpt" == "Y" ]; then
+    execute_script "vgpt.sh"
 fi
 
-if [ "$vgpt" == "Y" ]; then
-    execute_script "install-vgpt.sh"
+execute_script "InputGroup.sh"
+
+if [ "$dots" == "Y" ]; then
+    execute_script "dotfiles.sh"
+
 fi
 
 clear

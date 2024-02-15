@@ -19,9 +19,14 @@
 
 > clone this repo by using git. Change directory, make executable and run the script
 ```bash
-git clone https://github.com/AXWTV/Fedora-Hyprland.git
+git clone --depth 1 https://github.com/AXWTV/Fedora-Hyprland.git
 cd Fedora-Hyprland
-chmod +x DotFile_install.sh
-./DotFile_install.sh
+chmod +x install.sh
+./install.sh
 ```
 
+## Having Problems with installation or Other stuff
+- Feel Free to open issues
+- Also for guids go to [Wiki](https://github.com/AXWTV/Hyprland-DotFiles/wiki)
+
+## This repo is a fork of [JaKooLit's Fedora-Hyprland](https://github.com/JaKooLit/Fedora-Hyprland).

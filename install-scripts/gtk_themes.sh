@@ -1,6 +1,13 @@
 #!/bin/bash
+# 💫 https://github.com/JaKooLit 💫 #
+# GTK Themes & ICONS and  Sourcing from a different Repo #
 
-############## WARNING DO NOT EDIT BEYOND THIS LINE if you dont know what you are doing! ######################################
+engine=(
+    unzip
+    gtk-murrine-engine
+)
+
+## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##
 # Determine the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -8,61 +15,39 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR="$SCRIPT_DIR/.."
 cd "$PARENT_DIR" || exit 1
 
-# Set some colors for output messages
-OK="$(tput setaf 2)[OK]$(tput sgr0)"
-ERROR="$(tput setaf 1)[ERROR]$(tput sgr0)"
-NOTE="$(tput setaf 3)[NOTE]$(tput sgr0)"
-WARN="$(tput setaf 166)[WARN]$(tput sgr0)"
-CAT="$(tput setaf 6)[ACTION]$(tput sgr0)"
-ORANGE=$(tput setaf 166)
-YELLOW=$(tput setaf 3)
-RESET=$(tput sgr0)
+source "$(dirname "$(readlink -f "$0")")/Global_functions.sh"
 
 # Set the name of the log file to include the current date and time
-LOG="install-$(date +%d-%H%M%S)_themes.log"
+LOG="Install-Logs/install-$(date +%d-%H%M%S)_themes.log"
 
-set -e
 
-# Function for installing packages
-install_package() {
-  # Checking if package is already installed
-  if sudo dnf list installed "$1" &>> /dev/null ; then
-    echo -e "${OK} $1 is already installed. Skipping..."
-  else
-    # Package not installed
-    echo -e "${NOTE} Installing $1 ..."
-    sudo dnf install -y "$1" 2>&1 | tee -a "$LOG"
-    # Making sure package is installed
-    if sudo dnf list installed "$1" &>> /dev/null ; then
-      echo -e "\033[1A\033[K${OK} $1 was installed."
-    else
-      # Something is missing, exiting to review log
-      echo -e "\033[1A\033[K${ERROR} $1 failed to install :( , please check the install.log. You may need to install manually! Sorry I have tried :("
-      exit 1
+# installing engine needed for gtk themes
+for PKG1 in "${engine[@]}"; do
+    install_package "$PKG1" 2>&1 | tee -a "$LOG"
+    if [ $? -ne 0 ]; then
+        echo -e "\033[1A\033[K${ERROR} - $PKG1 install had failed, please check the install.log"
+        exit 1
     fi
-  fi
-}
-
-# installing unzip package to unzip theme packages
-for PKG1 in unzip; do
-  install_package "$PKG1" 2>&1 | tee -a "$LOG"
-  if [ $? -ne 0 ]; then
-    echo -e "\033[1A\033[K${ERROR} - $PKG1 install had failed, please check the install.log"
-    exit 1
-  fi
 done
 
-printf "${NOTE} Installing Tokyo Theme GTK packages...\n"
-if wget https://github.com/ljmill/tokyo-night-icons/releases/download/v0.2.0/TokyoNight-SE.tar.bz2; then
-  mkdir -p ~/.icons
-  tar -xvjf TokyoNight-SE.tar.bz2 -C ~/.icons
-  mkdir -p ~/.themes
-  unzip -q "assets/tokyo-themes/Tokyonight-Dark-B.zip" -d ~/.themes || true
-  unzip -q "assets/tokyo-themes/Tokyonight-Light-B.zip" -d ~/.themes || true
+# Check if the directory exists and delete it if present
+if [ -d "GTK-themes-icons" ]; then
+    echo "$NOTE Tokyo Theme GTK themes and Icons folder exist..deleting..." 2>&1 | tee -a "$LOG"
+    rm -rf "GTK-themes-icons" 2>&1 | tee -a "$LOG"
+fi
+
+echo "$NOTE Cloning Tokyo Theme GTK themes and Icons repository..." 2>&1 | tee -a "$LOG"
+if git clone https://github.com/JaKooLit/GTK-themes-icons.git ; then
+    cd GTK-themes-icons
+    chmod +x auto-extract.sh
+    ./auto-extract.sh
+    cd ..
+    echo "$OK Extracted GTK Themes & Icons to ~/.icons & ~/.themes folders" 2>&1 | tee -a "$LOG"
 else
-  echo -e "${ERROR} Download failed for Tokyo Theme GTK packages."
+    echo "$ERROR Download failed for Tokyo Theme GTK themes and Icons.." 2>&1 | tee -a "$LOG"
 fi
 
 tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C ~/.icons 2>&1 | tee -a "$LOG"
+echo "$OK Extracted Bibata-Modern-Ice.tar.xz to ~/.icons folder." 2>&1 | tee -a "$LOG"
 
 clear
