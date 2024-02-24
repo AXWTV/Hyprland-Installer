@@ -26,6 +26,7 @@ hypr_package=(
   nano
   network-manager-applet
   neovim
+  nautilus
   openssl
   pamixer
   pavucontrol
