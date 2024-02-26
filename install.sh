@@ -75,7 +75,6 @@ sddm=""
 thunar=""
 xdph=""
 zsh=""
-vgpt=""
 p10k=""
 
 # Define the directory where your scripts are located
@@ -150,8 +149,6 @@ printf "\n"
 ask_yes_no "-Do you want to PowerLevel10K?" p10k
 printf "\n"
 
-ask_yes_no "-Do you want to install vgpt (a voice command chat-gpt included with the dotfiles)?" vgpt
-printf "\n"
 
 # Ensuring all in the scripts folder are made executable
 chmod +x install-scripts/*
@@ -160,6 +157,7 @@ chmod +x install-scripts/*
 execute_script "copr.sh"
 execute_script "00-hypr-pkgs.sh"
 execute_script "fonts.sh"
+execute_script "tmux.sh"
 
 if [ "$nvidia" == "Y" ]; then
     execute_script "nvidia.sh"

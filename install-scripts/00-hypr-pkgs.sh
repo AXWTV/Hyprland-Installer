@@ -43,7 +43,7 @@ hypr_package=(
   swappy
   swayidle
   SwayNotificationCenter
-  vim
+  tmux
   waybar
   wget
   wl-clipboard
@@ -59,6 +59,7 @@ hypr_package_2=(
   btop
   cava
   eog
+  perl-IO-Compress
   gnome-system-monitor
   mousepad
   mpv

@@ -37,31 +37,34 @@ for PKG1 in "${fonts[@]}"; do
   fi
 done
 
-# jetbrains nerd font. Necessary for waybar
-DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
-# Maximum number of download attempts
-MAX_ATTEMPTS=2
-for ((ATTEMPT = 1; ATTEMPT <= MAX_ATTEMPTS; ATTEMPT++)); do
-    curl -OL "$DOWNLOAD_URL" 2>&1 | tee -a "$LOG" && break
-    echo "Download attempt $ATTEMPT failed. Retrying in 2 seconds..." 2>&1 | tee -a "$LOG"
-    sleep 2
+
+fonts=(
+  "Hack"
+  "Iosevka"
+  "NerdFontsSymbolsOnly"
+  "JetBrainsMono"
+)
+
+# Get the latest release tag from the Nerd Fonts repository
+latest_release_tag=$(curl --silent "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+
+# Download and install fonts
+for font in "${fonts[@]}"
+do
+  if [ -d ~/.local/share/fonts/${fonts} ]; then
+      rm -rf ~/.local/share/fonts/${fonts} 2>&1 | tee -a "$LOG"
+  fi
+
+  mkdir -p ~/.local/share/fonts/${fonts} 2>&1 | tee -a "$LOG"
+  wget https://github.com/ryanoasis/nerd-fonts/releases/download/${latest_release_tag}/${fonts}.zip 2>&1 | tee -a "$LOG"
+  unzip ${fonts}.zip -d ~/.local/share/fonts/${fonts} 2>&1 | tee -a "$LOG"
+  
+  if [ -d "${fonts}.zip" ]; then
+  	  rm -r ${fonts}.zip 2>&1 | tee -a "$LOG"
+  fi
 done
 
-# Check if the JetBrainsMono folder exists and delete it if it does
-if [ -d ~/.local/share/fonts/JetBrainsMonoNerd ]; then
-    rm -rf ~/.local/share/fonts/JetBrainsMonoNerd 2>&1 | tee -a "$LOG"
-fi
-
-mkdir -p ~/.local/share/fonts/JetBrainsMonoNerd 2>&1 | tee -a "$LOG"
-# Extract the new files into the JetBrainsMono folder and log the output
-tar -xJkf JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMonoNerd 2>&1 | tee -a "$LOG"
-
-# Update font cache and log the output
-fc-cache -v 2>&1 | tee -a "$LOG"
-
-# clean up 
-if [ -d "JetBrainsMono.tar.xz" ]; then
-	rm -r JetBrainsMono.tar.xz 2>&1 | tee -a "$LOG"
-fi
+# Update font cache
+fc-cache -fv
 
 clear
