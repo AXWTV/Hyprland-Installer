@@ -51,16 +51,13 @@ latest_release_tag=$(curl --silent "https://api.github.com/repos/ryanoasis/nerd-
 # Download and install fonts
 for font in "${fonts[@]}"
 do
-  if [ -d ~/.local/share/fonts/${fonts} ]; then
-      rm -rf ~/.local/share/fonts/${fonts} 2>&1 | tee -a "$LOG"
-  fi
-
-  mkdir -p ~/.local/share/fonts/${fonts} 2>&1 | tee -a "$LOG"
-  wget https://github.com/ryanoasis/nerd-fonts/releases/download/${latest_release_tag}/${fonts}.zip 2>&1 | tee -a "$LOG"
-  unzip ${fonts}.zip -d ~/.local/share/fonts/${fonts} 2>&1 | tee -a "$LOG"
-  
-  if [ -d "${fonts}.zip" ]; then
-  	  rm -r ${fonts}.zip 2>&1 | tee -a "$LOG"
+  if [ -d ~/.local/share/fonts/${font} ]; then
+    echo "Font ${font} is already installed. Skipping..."
+  else
+    mkdir -p ~/.local/share/fonts/${font} 2>&1 | tee -a "$LOG"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/${latest_release_tag}/${font}.zip 2>&1 | tee -a "$LOG"
+    unzip ${font}.zip -d ~/.local/share/fonts/${font} 2>&1 | tee -a "$LOG"
+    rm -r ${font}.zip 2>&1 | tee -a "$LOG"
   fi
 done
 
