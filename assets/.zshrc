@@ -24,7 +24,7 @@ source $ZSH/oh-my-zsh.sh
 
 ###      -----User configuration------      ###
 alias vim=nvim
-alias gt="cd $HOME/gitthings"
+alias gt="cd $HOME/git-projects"
 alias update="sudo dnf update"
 alias ls="lsd -al"
 
