@@ -199,10 +199,6 @@ if [ "$nwg" == "Y" ]; then
     execute_script "nwg-look.sh"
 fi
 
-if [ "$vgpt" == "Y" ]; then
-    execute_script "vgpt.sh"
-fi
-
 if [ "$p10k" == "Y" ]; then
     execute_script "p10k.sh"
 fi

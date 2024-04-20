@@ -4,6 +4,7 @@
 
 hypr=(
 hyprland
+hyprland-devel
 )
 
 ## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##
@@ -25,5 +26,11 @@ printf "${NOTE} Installing Hyprland Package...\n"
    install_package "$HYPR" 2>&1 | tee -a "$LOG"
    [ $? -ne 0 ] && { echo -e "\e[1A\e[K${ERROR} - $HYPR install had failed, please check the install.log"; exit 1; }
   done
+
+printf "${NOTE} Installing Hyprland Plugins...\n"
+hyprpm add https://github.com/hyprwm/hyprland-plugins
+hyprpm add https://github.com/KZDKM/Hyprspace
+hyprpm enable Hyprspace
+hyprpm enable hyprtrails
 
 clear
