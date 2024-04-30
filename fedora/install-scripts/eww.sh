@@ -2,7 +2,6 @@
 # https://github.com/AXWTV
 
 eww_pkg (
-rust
 hyprshot
 cargo
 gtk3-devel
@@ -32,9 +31,7 @@ source "$(dirname "$(readlink -f "$0")")/Global_functions.sh"
 
 
 # Set the name of the log file to include the current date and time
-LOG="Install-Logs/install-$(date +%d-%H%M%S)_hypr-pkgs.log"
-MLOG="install-$(date +%d-%H%M%S)_nwg-look2.log"
-
+LOG="Install-Logs/install-$(date +%d-%H%M%S)_eww.log"
 
 # Installation of main components
 printf "\n%s - Installing eww packages.... \n" "${NOTE}"
@@ -47,28 +44,33 @@ for EWW in "${eww_pkg[@]}"; do
   fi
 done
 
-# Check if nwg-look directory exists
+# Check if eww directory exists
 if [ -d "eww" ]; then
   printf "${INFO} eww directory already exists. Updating...\n"
   cd eww || exit 1
   git stash
   git pull
 else
-  # Clone nwg-look repository if directory doesn't exist
+  # Clone eww repository if directory doesn't exist
   if git clone https://github.com/elkowar/eww.git; then
     cd eww || exit 1
   else
     echo -e "${ERROR} Download failed for eww." 2>&1 | tee -a "$LOG"
-    mv "$MLOG" ../Install-Logs/ || true
     exit 1
   fi
 fi
 
+# Rustup
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # Build EWW
-cargo build --release --no-default-features --features=wayland 2>&1 | tee -a "$MLOG"
-cd target/release
-chmod +x ./eww
-sudo cp -r eww /usr/bin/
+if cargo build --release --no-default-features --features=wayland; then
+  cd target/release
+  chmod +x ./eww
+  sudo cp -r eww /usr/bin/
+  sudo ln -s $(pwd)/eww /usr/local/bin
+else
+  echo -e "${ERROR} Building Eww failed!" 2>$1 | tee -a "$LOG"
 
 cd "$PARENT_DIR" || exit 1
 printf "${OK} eww installed successfully.\n" 2>&1 | tee -a "$MLOG"
