@@ -75,6 +75,9 @@ noto-fonts-emoji
 otf-font-awesome 
 ttf-droid 
 ttf-fira-code
+ttf-nerd-fonts-symbols
+ttf-hack-nerd
+ttc-iosevka
 ttf-jetbrains-mono 
 ttf-jetbrains-mono-nerd 
 )
