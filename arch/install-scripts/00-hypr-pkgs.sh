@@ -13,6 +13,7 @@ Extra=(
 
 hypr_package=( 
 alacritty
+ags
 cliphist
 curl 
 grim 
