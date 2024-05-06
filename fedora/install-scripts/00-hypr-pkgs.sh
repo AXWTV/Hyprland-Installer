@@ -13,6 +13,7 @@ Extra=(
 # packages neeeded
 hypr_package=(
   alacritty
+  aylurs-gtk-shell
   curl
   git
   grim
@@ -66,6 +67,7 @@ hypr_package_2=(
   mpv-mpris
   nvtop
   vim-enhanced
+  fd-find
 )
 
 copr_packages=(

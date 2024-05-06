@@ -38,7 +38,7 @@ for PKG1 in "${fonts[@]}"; do
 done
 
 
-fonts=(
+fontsnf=(
   "Hack"
   "Iosevka"
   "NerdFontsSymbolsOnly"
@@ -48,10 +48,10 @@ fonts=(
 # Get the latest release tag from the Nerd Fonts repository
 latest_release_tag=$(curl --silent "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
 
-# Download and install fonts
-for font in "${fonts[@]}"
+# Download and install NF fonts
+for font in "${fontsnf[@]}"
 do
-  if [ -d ~/.local/share/fonts/${font} ]; then
+  if [ -d ~/.local/share/fonts/${fontnf} ]; then
     echo "Font ${font} is already installed. Skipping..."
   else
     mkdir -p ~/.local/share/fonts/${font} 2>&1 | tee -a "$LOG"
@@ -60,6 +60,19 @@ do
     rm -r ${font}.zip 2>&1 | tee -a "$LOG"
   fi
 done
+
+# Get the latest release tag form Font Awesome repositiry
+LATEST_VERSION=$(curl -s https://api.github.com/repos/FortAwesome/Font-Awesome/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+
+# Font Awesome
+if [ -d ~/.local/share/fonts/fontawesome ]; then
+  echo "Font Awesome is already installed. Skipping..."
+else
+  mkdir -p ~/.local/share/fonts/fontawesome 2>&1 | tee -a "$LOG"
+  wget https://github.com/FortAwesome/Font-Awesome/releases/download/${LATEST_VERSION}/fontawesome-free-${LATEST_VERSION}-desktop.zip 2>&1 | tee -a "$LOG"
+  unzip fontawesome-free-${LATEST_VERSION}-desktop.zip -d ~/.local/share/fonts/fontawesome 2>&1 | tee -a "$LOG"
+  rm -r fontawesome-free-${LATEST_VERSION}-desktop.zip 2>&1 | tee -a "$LOG"
+fi
 
 # Update font cache
 fc-cache -fv

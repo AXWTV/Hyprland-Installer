@@ -1,9 +1,11 @@
 #!/bin/bash
 # 💫 https://github.com/JaKooLit 💫 #
-# Main Hyprland Package #
+# Bluetooth Stuff #
 
-hypr=(
-hyprland
+blue=(
+bluez
+bluez-utils
+blueman
 )
 
 ## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##
@@ -17,13 +19,16 @@ cd "$PARENT_DIR" || exit 1
 source "$(dirname "$(readlink -f "$0")")/Global_functions.sh"
 
 # Set the name of the log file to include the current date and time
-LOG="Install-Logs/install-$(date +%d-%H%M%S)_hyprland.log"
+LOG="Install-Logs/install-$(date +%d-%H%M%S)_bluetooth.log"
 
-# Hyprland
-printf "${NOTE} Installing Hyprland Package...\n"
- for HYPR in "${hypr[@]}"; do
-   install_package "$HYPR" 2>&1 | tee -a "$LOG"
-   [ $? -ne 0 ] && { echo -e "\e[1A\e[K${ERROR} - $HYPR install had failed, please check the install.log"; exit 1; }
+# Bluetooth
+printf "${NOTE} Installing Bluetooth Packages...\n"
+ for BLUE in "${blue[@]}"; do
+   install_package "$BLUE" 2>&1 | tee -a "$LOG"
+   [ $? -ne 0 ] && { echo -e "\e[1A\e[K${ERROR} - $BLUE install had failed, please check the install.log"; exit 1; }
   done
+
+printf " Activating Bluetooth Services...\n"
+sudo systemctl enable --now bluetooth.service 2>&1 | tee -a "$LOG"
 
 clear
