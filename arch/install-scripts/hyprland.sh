@@ -5,6 +5,7 @@
 hypr=(
 hyprland
 hyprland-devel
+hyprlock
 )
 
 ## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##
@@ -39,8 +40,6 @@ done
 
 printf "${NOTE} Installing Hyprland Plugins...\n"
 hyprpm add https://github.com/hyprwm/hyprland-plugins
-hyprpm add https://github.com/KZDKM/Hyprspace
-hyprpm enable Hyprspace
 hyprpm enable hyprtrails
 
 clear
