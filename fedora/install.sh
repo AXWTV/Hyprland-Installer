@@ -78,7 +78,7 @@ zsh=""
 p10k=""
 
 # Define the directory where your scripts are located
-script_directory=fedora/install-scripts
+script_directory=install-scripts
 
 # Function to ask a yes/no question and set the response in a variable
 ask_yes_no() {
@@ -151,7 +151,7 @@ printf "\n"
 
 
 # Ensuring all in the scripts folder are made executable
-chmod +x fedora/install-scripts/*
+chmod +x install-scripts/*
 
 # Install hyprland packages
 execute_script "copr.sh"

@@ -40,7 +40,9 @@ elif [ "$DISTRO" == "fedora" ]; then
     ██║     ███████╗██████╔╝╚██████╔╝██║  ██║██║  ██║
     ╚═╝     ╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
                                                  "
-    source $(pwd)/fedora/install.sh
+    cd fedora/
+    chmod +x install.sh
+    ./install.sh
 
 elif [ "$DISTRO" == "arch" ]; then
     # Commands for Arch
@@ -53,7 +55,9 @@ elif [ "$DISTRO" == "arch" ]; then
     ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
                                     
     "
-    source $(pwd)/arch/install.sh
+    cd arch/
+    chmod +x install.sh
+    ./install.sh
 
 else
     echo "Not yet supported " $DISTRO
