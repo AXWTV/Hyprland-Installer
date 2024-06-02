@@ -3,7 +3,7 @@
 # pacman adding up extra-spices #
 
 ## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##
-source "$(dirname "$(readlink -f "$0")")/Global_functions.sh"
+source "${SCRIPT_DIR}/Global_functions.sh"
 
 # Set the name of the log file to include the current date and time
 LOG="Install-Logs/install-$(date +%d-%H%M%S)_pacman.log"

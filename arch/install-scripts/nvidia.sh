@@ -19,7 +19,7 @@ hypr=(
 
 ## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##
 # Determine the directory where the script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${SCRIPT_DIR}/Global_functions.sh"
 
 # Change the working directory to the parent directory of the script
 PARENT_DIR="$SCRIPT_DIR/.."
