@@ -16,20 +16,30 @@ ENABLE_CORRECTION="true"
 
 plugins=(
   dnf
-  zsh-autosuggestions
   git 
   zsh-syntax-highlighting
 )
 source $ZSH/oh-my-zsh.sh
 
 ###      -----User configuration------      ###
+if [ ! -d "$HOME/git-projects" ]; then
+  mkdir -p "$HOME/git-projects"
+fi
+
 alias vim=nvim
 alias gt="cd $HOME/git-projects"
 alias update="sudo dnf update"
-alias ls="lsd -al"
+alias ls="lsd -a"
 
 # source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH=$PATH:/home/axwtv_bugassassin/.spicetify
+export PATH=$PATH:/home/axwtv/.spicetify
+
+# bun completions
+[ -s "/home/axwtv/.bun/_bun" ] && source "/home/axwtv/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
