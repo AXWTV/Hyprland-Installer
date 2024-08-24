@@ -4,9 +4,9 @@
 
 sddm=(
 	sddm
-	qt5-qtgraphicaleffects
-	qt5-qtquickcontrols
-	qt5-qtquickcontrols2
+  qt6-qt5compat 
+  qt6-qtdeclarative 
+  qt6-qtsvg
 )
 
 
@@ -18,7 +18,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR="$SCRIPT_DIR/.."
 cd "$PARENT_DIR" || exit 1
 
-source "$(dirname "$(readlink -f "$0")")/Global_functions.sh"
+source "${SCRIPT_DIR}/Global_functions.sh"
 
 # Set the name of the log file to include the current date and time
 LOG="Install-Logs/install-$(date +%d-%H%M%S)_sddm.log"
@@ -29,7 +29,7 @@ printf "\n%s - Installing sddm and dependencies.... \n" "${NOTE}"
 for PKG2 in "${sddm[@]}"; do
   install_package "$PKG2" 2>&1 | tee -a "$LOG"
   if [ $? -ne 0 ]; then
-    echo -e "\e[1A\e[K${ERROR} - $PKG2 install had failed, please check the install.log"
+    echo -e "\e[1A\e[K${ERROR} - $PKG2 Package installation failed, Please check the installation logs"
     exit 1
   fi
 done
@@ -65,19 +65,19 @@ while [ "$valid_input" != true ]; do
     printf "\n%s - Installing Simple SDDM Theme\n" "${NOTE}"
 
     # Check if /usr/share/sddm/themes/simple-sddm exists and remove if it does
-    if [ -d "/usr/share/sddm/themes/simple-sddm" ]; then
-      sudo rm -rf "/usr/share/sddm/themes/simple-sddm"
-      echo -e "\e[1A\e[K${OK} - Removed existing 'simple-sddm' directory." 2>&1 | tee -a "$LOG"
+    if [ -d "/usr/share/sddm/themes/simple-sddm-2" ]; then
+      sudo rm -rf "/usr/share/sddm/themes/simple-sddm-2"
+      echo -e "\e[1A\e[K${OK} - Removed existing 'simple-sddm-2' directory." 2>&1 | tee -a "$LOG"
     fi
 
     # Check if simple-sddm directory exists in the current directory and remove if it does
-    if [ -d "simple-sddm" ]; then
-      rm -rf "simple-sddm"
-      echo -e "\e[1A\e[K${OK} - Removed existing 'simple-sddm' directory from the current location." 2>&1 | tee -a "$LOG"
+    if [ -d "simple-sddm-2" ]; then
+      rm -rf "simple-sddm-2"
+      echo -e "\e[1A\e[K${OK} - Removed existing 'simple-sddm-2' directory from the current location." 2>&1 | tee -a "$LOG"
     fi
 
-    if git clone https://github.com/JaKooLit/simple-sddm.git; then
-      while [ ! -d "simple-sddm" ]; do
+    if git clone https://github.com/JaKooLit/simple-sddm-2.git; then
+      while [ ! -d "simple-sddm-2" ]; do
       sleep 1
       done
 
@@ -86,8 +86,8 @@ while [ "$valid_input" != true ]; do
         echo -e "\e[1A\e[K${OK} - Directory '/usr/share/sddm/themes' created." 2>&1 | tee -a "$LOG"
       fi
 
-      sudo mv simple-sddm /usr/share/sddm/themes/
-      echo -e "[Theme]\nCurrent=simple-sddm" | sudo tee "$sddm_conf_dir/10-theme.conf" &>> "$LOG"
+      sudo mv simple-sddm-2 /usr/share/sddm/themes/
+      echo -e "[Theme]\nCurrent=simple-sddm-2" | sudo tee "$sddm_conf_dir/theme.conf.user" &>> "$LOG"
     else
       echo -e "\e[1A\e[K${ERROR} - Failed to clone the theme repository. Please check your internet connection" | tee -a "$LOG" >&2
     fi
@@ -97,6 +97,7 @@ while [ "$valid_input" != true ]; do
     valid_input=true
   else
     printf "\n%s - Invalid input. Please enter 'y' for Yes or 'n' for No.\n" "${ERROR}" 2>&1 | tee -a "$LOG"
+    install_sddm_theme=""
   fi
 done
 
