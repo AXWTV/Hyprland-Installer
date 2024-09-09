@@ -58,6 +58,7 @@ btop
 cava
 tmux
 eog
+fd
 gnome-system-monitor
 mousepad 
 mpv
@@ -79,7 +80,9 @@ ttf-nerd-fonts-symbols
 ttf-hack-nerd
 ttc-iosevka
 ttf-jetbrains-mono 
-ttf-jetbrains-mono-nerd 
+ttf-jetbrains-mono-nerd
+ttf-nerd-fonts-symbols
+ttf-nerd-fonts-symbols-mono
 )
 
 # List of packages to uninstall as it conflicts with swaync or causing swaync to not function properly

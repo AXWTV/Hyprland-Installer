@@ -198,6 +198,12 @@ execute_script "00-hypr-pkgs.sh"
 # Install pipewire and pipewire-audio
 execute_script "pipewire.sh"
 
+# Install ags hypr-pkgs
+execute_script "00-ags-pkgs.sh"
+
+# TMUX plugins
+execute_script "tmux.sh"
+
 if [ "$nvidia" == "Y" ]; then
     execute_script "nvidia.sh"
 fi
