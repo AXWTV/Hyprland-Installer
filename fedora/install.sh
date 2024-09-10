@@ -132,8 +132,6 @@ ask_yes_no "-Install GTK themes? (required for Dark/Light function)" gtk_themes
 printf "\n"
 ask_yes_no "-Do you want to configure Bluetooth?" bluetooth
 printf "\n"
-ask_yes_no "-Do you want to install Thunar file manager?" thunar
-printf "\n"
 ask_yes_no "-Install & configure SDDM log-in Manager plus (OPTIONAL) SDDM Theme?" sddm
 printf "\n"
 ask_yes_no "-Install XDG-DESKTOP-PORTAL-HYPRLAND? (for proper Screen Share ie OBS)" xdph
@@ -156,6 +154,7 @@ chmod +x install-scripts/*
 # Install hyprland packages
 execute_script "copr.sh"
 execute_script "00-hypr-pkgs.sh"
+execute_script "00-ags-pkgs.sh"
 execute_script "fonts.sh"
 execute_script "tmux.sh"
 
@@ -173,10 +172,6 @@ fi
 
 if [ "$bluetooth" == "Y" ]; then
     execute_script "bluetooth.sh"
-fi
-
-if [ "$thunar" == "Y" ]; then
-    execute_script "thunar.sh"
 fi
 
 if [ "$sddm" == "Y" ]; then

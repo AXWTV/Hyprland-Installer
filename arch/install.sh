@@ -32,15 +32,6 @@ echo
 
 read -p "$(tput setaf 6)Would you like to proceed? (y/n): $(tput sgr0)" proceed
 
-
-printf "\n%.0s" {1..2}
-echo "$(tput bold)$(tput setaf 7)Choose Y to use preset ONLY once you reviewed, updated or updated the preset.sh $(tput sgr0)" 
-echo "$(tput bold)$(tput setaf 7)If you are not sure what to do, choose N in the "Use Preset Settings" question $(tput sgr0)"
-printf "\n%.0s" {1..1}
-read -p "$(tput setaf 6)Would you like to Use Preset Settings? (y/n): $(tput sgr0)" use_preset
-
-printf "\n%.0s" {1..3}
-
 if [ "$proceed" != "y" ]; then
     echo "Installation aborted."
     exit 1
@@ -49,11 +40,6 @@ fi
 # Create Directory for Install Logs
 if [ ! -d Install-Logs ]; then
     mkdir Install-Logs
-fi
-
-# Use of Preset Settings
-if [[ $use_preset = [Yy] ]]; then
-  source ./preset.sh
 fi
 
 # Set some colors for output messages
@@ -163,8 +149,6 @@ ask_yes_no "-Install GTK themes (required for Dark/Light function)?" gtk_themes
 printf "\n"
 ask_yes_no "-Do you want to configure Bluetooth?" bluetooth
 printf "\n"
-ask_yes_no "-Do you want to install Thunar file manager?" thunar
-printf "\n"
 ask_yes_no "-Install & configure SDDM log-in Manager plus (OPTIONAL) SDDM Theme?" sddm
 printf "\n"
 ask_yes_no "-Install XDG-DESKTOP-PORTAL-HYPRLAND? (For proper Screen Share ie OBS)" xdph
@@ -218,10 +202,6 @@ fi
 
 if [ "$bluetooth" == "Y" ]; then
     execute_script "bluetooth.sh"
-fi
-
-if [ "$thunar" == "Y" ]; then
-    execute_script "thunar.sh"
 fi
 
 if [ "$sddm" == "Y" ]; then

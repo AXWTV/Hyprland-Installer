@@ -23,6 +23,7 @@ imagemagick
 jq
 kitty
 kvantum
+lsd
 nano  
 network-manager-applet 
 pamixer 
@@ -60,9 +61,11 @@ tmux
 eog
 fd
 gnome-system-monitor
+gnome-tweaks
 mousepad 
 mpv
 mpv-mpris 
+neovim
 nvtop
 nwg-look-bin
 pacman-contrib
