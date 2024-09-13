@@ -62,6 +62,7 @@ eog
 fd
 gnome-system-monitor
 gnome-tweaks
+power-profiles-daemon
 mousepad 
 mpv
 mpv-mpris 

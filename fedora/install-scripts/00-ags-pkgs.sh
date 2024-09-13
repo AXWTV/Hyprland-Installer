@@ -27,3 +27,7 @@ fi
 
 # Matugen
 cargo install matugen
+
+# Power profile daemon setup
+sudo systemctl enable power-profiles-daemon
+sudo systemctl start power-profiles-daemon

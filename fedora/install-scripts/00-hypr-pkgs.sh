@@ -34,6 +34,7 @@ hypr_package=(
   pipewire-alsa
   playerctl
   polkit-gnome
+  power-profiles-daemon
   python3-requests
   python3-pip
   qt5ct
