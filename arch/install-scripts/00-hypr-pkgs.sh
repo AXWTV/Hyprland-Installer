@@ -13,7 +13,7 @@ Extra=(
 
 hypr_package=( 
 alacritty
-ags
+aylurs-gtk-shell
 cliphist
 curl 
 grim 
@@ -24,7 +24,8 @@ jq
 kitty
 kvantum
 lsd
-nano  
+nano
+npm
 network-manager-applet 
 pamixer 
 pavucontrol
