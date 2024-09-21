@@ -25,6 +25,7 @@ hypr_package=(
   kvantum
   lsd
   nano
+  npm
   network-manager-applet
   neovim
   nautilus
