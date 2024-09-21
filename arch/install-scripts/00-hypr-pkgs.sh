@@ -27,6 +27,7 @@ lsd
 nano
 npm
 network-manager-applet 
+nautilus
 pamixer 
 pavucontrol
 pipewire-alsa 
