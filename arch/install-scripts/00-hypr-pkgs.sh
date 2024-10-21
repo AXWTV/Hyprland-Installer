@@ -24,6 +24,7 @@ jq
 kitty
 kvantum
 lsd
+matugen-bin
 nano
 npm
 network-manager-applet 
