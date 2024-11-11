@@ -31,5 +31,6 @@ printf "${NOTE} Installing Hyprland Package...\n"
 printf "${NOTE} Installing Hyprland Plugins...\n"
 hyprpm add https://github.com/hyprwm/hyprland-plugins
 hyprpm enable hyprtrails
+hyprrpm update
 
 clear
