@@ -15,7 +15,8 @@ solopasha/hyprland
 en4aew/desktop-tools
 trs-sod/swaylock-effects
 alebastr/sway-extras
-erikreider/SwayNotificationCenter  
+erikreider/SwayNotificationCenter
+tofik/nwg-shell
 )
 
 

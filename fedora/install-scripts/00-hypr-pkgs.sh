@@ -13,7 +13,6 @@ Extra=(
 # packages neeeded
 hypr_package=(
   alacritty
-  aylurs-gtk-shell
   curl
   git
   grim
@@ -63,26 +62,33 @@ hypr_package_2=(
   cava
   eog
   perl-IO-Compress
+  fastfetch
   gnome-system-monitor
   mousepad
   mpv
   mpv-mpris
   nvtop
+  qalculate-gtk
   vim-enhanced
   fd-find
 )
 
 copr_packages=(
+  aylurs-gtk-shell
   cliphist
+  nwg-look
   pamixer
-  swaylock-effects
   swww
+  wallust  
+  fd-find
 )
+
 
 # List of packages to uninstall as it conflicts with swaync or causing swaync to not function properly
 uninstall=(
   dunst
   mako
+  rofi
 )
 
 ## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##

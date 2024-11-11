@@ -38,43 +38,47 @@ for PKG1 in "${fonts[@]}"; do
 done
 
 
-fontsnf=(
-  "Hack"
-  "Iosevka"
-  "NerdFontsSymbolsOnly"
-  "JetBrainsMono"
-)
+# Directories for font installation
+FONT_DIR="$HOME/.local/share/fonts"
 
-# Get the latest release tag from the Nerd Fonts repository
-latest_release_tag=$(curl --silent "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+# Create the fonts directory if it doesn't exist
+mkdir -p "$FONT_DIR"
 
-# Download and install NF fonts
-for font in "${fontsnf[@]}"
-do
-  if [ -d ~/.local/share/fonts/${fontnf} ]; then
-    echo "Font ${font} is already installed. Skipping..."
-  else
-    mkdir -p ~/.local/share/fonts/${font} 2>&1 | tee -a "$LOG"
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/${latest_release_tag}/${font}.zip 2>&1 | tee -a "$LOG"
-    unzip ${font}.zip -d ~/.local/share/fonts/${font} 2>&1 | tee -a "$LOG"
-    rm -r ${font}.zip 2>&1 | tee -a "$LOG"
-  fi
-done
+# Function to download and install fonts using curl
+install_font() {
+    FONT_URL=$1
+    FONT_NAME=$2
+    FONT_ARCHIVE=$3
 
-# Get the latest release tag form Font Awesome repositiry
-LATEST_VERSION=$(curl -s https://api.github.com/repos/FortAwesome/Font-Awesome/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    echo "Downloading $FONT_NAME..."
+    curl -L "$FONT_URL" -o "$FONT_ARCHIVE"
+    
+    echo "Extracting $FONT_NAME..."
+    mkdir -p "$FONT_DIR/$FONT_NAME"
+    unzip -q "$FONT_ARCHIVE" -d "$FONT_DIR/$FONT_NAME"
+    rm "$FONT_ARCHIVE"
+    echo "$FONT_NAME installed successfully!"
+}
 
-# Font Awesome
-if [ -d ~/.local/share/fonts/fontawesome ]; then
-  echo "Font Awesome is already installed. Skipping..."
-else
-  mkdir -p ~/.local/share/fonts/fontawesome 2>&1 | tee -a "$LOG"
-  wget https://github.com/FortAwesome/Font-Awesome/releases/download/${LATEST_VERSION}/fontawesome-free-${LATEST_VERSION}-desktop.zip 2>&1 | tee -a "$LOG"
-  unzip fontawesome-free-${LATEST_VERSION}-desktop.zip -d ~/.local/share/fonts/fontawesome 2>&1 | tee -a "$LOG"
-  rm -r fontawesome-free-${LATEST_VERSION}-desktop.zip 2>&1 | tee -a "$LOG"
-fi
+# Install Hack font
+install_font "https://github.com/chrissimpkins/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip" "Hack" "Hack-v3.003-ttf.zip"
+
+# Install Iosevka font
+install_font "https://github.com/oble/isevka/releases/download/v3.0.0/ttf-iosevka-3.0.0.zip" "Iosevka" "ttf-iosevka-3.0.0.zip"
+
+# Install Nerd Fonts Symbols Only
+install_font "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/NerdFontsSymbolsOnly.zip" "NerdFontsSymbolsOnly" "NerdFontsSymbolsOnly.zip"
+
+# Install JetBrainsMono font
+install_font "https://github.com/JetBrains/JetBrainsMono/releases/download/v2.0/JetBrainsMono-2.0.zip" "JetBrainsMono" "JetBrainsMono-2.0.zip"
+
+# Install Font Awesome (Free)
+install_font "https://github.com/FortAwesome/Font-Awesome/releases/download/5.15.4/fontawesome-free-5.15.4-desktop.zip" "FontAwesome" "fontawesome-free-5.15.4-desktop.zip"
 
 # Update font cache
+echo "Updating font cache..."
 fc-cache -fv
+
+echo "Fonts installation complete!"\
 
 clear
