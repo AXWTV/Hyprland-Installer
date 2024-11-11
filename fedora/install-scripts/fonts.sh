@@ -37,12 +37,15 @@ for PKG1 in "${fonts[@]}"; do
   fi
 done
 
-
 # Directories for font installation
 FONT_DIR="$HOME/.local/share/fonts"
+LOG_FILE="$HOME/font_installation_log.txt"
 
 # Create the fonts directory if it doesn't exist
 mkdir -p "$FONT_DIR"
+
+# Create or clear the log file
+> "$LOG_FILE"
 
 # Function to download and install fonts using curl
 install_font() {
@@ -52,33 +55,52 @@ install_font() {
 
     echo "Downloading $FONT_NAME..."
     curl -L "$FONT_URL" -o "$FONT_ARCHIVE"
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to download $FONT_NAME from $FONT_URL" >> "$LOG_FILE"
+        echo "$FONT_NAME failed to download."
+        return 1
+    fi
     
     echo "Extracting $FONT_NAME..."
     mkdir -p "$FONT_DIR/$FONT_NAME"
     unzip -q "$FONT_ARCHIVE" -d "$FONT_DIR/$FONT_NAME"
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to extract $FONT_NAME from $FONT_ARCHIVE" >> "$LOG_FILE"
+        echo "$FONT_NAME failed to extract."
+        rm "$FONT_ARCHIVE"
+        return 1
+    fi
+    
     rm "$FONT_ARCHIVE"
     echo "$FONT_NAME installed successfully!"
+    return 0
 }
 
-# Install Hack font
-install_font "https://github.com/chrissimpkins/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip" "Hack" "Hack-v3.003-ttf.zip"
+# Install Hack font (latest release)
+install_font "https://github.com/chrissimpkins/Hack/releases/latest/download/Hack.zip" "Hack" "Hack.zip"
 
-# Install Iosevka font
-install_font "https://github.com/oble/isevka/releases/download/v3.0.0/ttf-iosevka-3.0.0.zip" "Iosevka" "ttf-iosevka-3.0.0.zip"
+# Install Iosevka font (latest release)
+install_font "https://github.com/oble/isevka/releases/latest/download/ttf-iosevka.zip" "Iosevka" "ttf-iosevka.zip"
 
-# Install Nerd Fonts Symbols Only
-install_font "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/NerdFontsSymbolsOnly.zip" "NerdFontsSymbolsOnly" "NerdFontsSymbolsOnly.zip"
+# Install Nerd Fonts Symbols Only (latest release)
+install_font "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip" "NerdFontsSymbolsOnly" "NerdFontsSymbolsOnly.zip"
 
-# Install JetBrainsMono font
-install_font "https://github.com/JetBrains/JetBrainsMono/releases/download/v2.0/JetBrainsMono-2.0.zip" "JetBrainsMono" "JetBrainsMono-2.0.zip"
+# Install JetBrainsMono font (latest release)
+install_font "https://github.com/JetBrains/JetBrainsMono/releases/latest/download/JetBrainsMono.zip" "JetBrainsMono" "JetBrainsMono.zip"
 
-# Install Font Awesome (Free)
-install_font "https://github.com/FortAwesome/Font-Awesome/releases/download/5.15.4/fontawesome-free-5.15.4-desktop.zip" "FontAwesome" "fontawesome-free-5.15.4-desktop.zip"
+# Install Font Awesome (Free) (latest release)
+install_font "https://github.com/FortAwesome/Font-Awesome/releases/latest/download/fontawesome-free.zip" "FontAwesome" "fontawesome-free.zip"
 
 # Update font cache
 echo "Updating font cache..."
 fc-cache -fv
 
-echo "Fonts installation complete!"\
+# List out fonts that failed to install
+echo "The following fonts failed to install:" >> "$LOG_FILE"
+grep "failed" "$LOG_FILE" || echo "All fonts installed successfully." >> "$LOG_FILE"
+
+# Display the log file content (optional)
+cat "$LOG_FILE"
+echo "Fonts installation complete!"
 
 clear
