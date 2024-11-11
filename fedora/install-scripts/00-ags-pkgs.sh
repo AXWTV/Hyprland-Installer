@@ -7,7 +7,7 @@ LOG="Install-Logs/install-$(date +%d-%H%M%S)_ags-pkgs.log"
 if [ -d ~/.bun/ ]; then
     echo "Bun is already installed. Skipping..."
 else
-   sudo npm install -g npm 2>&1 | tee -a "$LOG"
+   sudo npm install -g bun 2>&1 | tee -a "$LOG"
 fi
 
 # Sass
