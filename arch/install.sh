@@ -157,6 +157,8 @@ ask_yes_no "-Install zsh, oh-my-zsh & (Optional) pokemon-colorscripts?" zsh
 printf "\n"
 ask_yes_no "-Installing in a Asus ROG Laptops?" rog
 printf "\n"
+ask_yes_no "-Do you want to clone the repo and install pre-configured beta Hyprland dotfiles?(beta for stable go to next the option)" dotsb
+printf "\n"
 ask_yes_no "-Do you want to download pre-configured Hyprland dotfiles?" dots
 printf "\n"
 ask_yes_no "-Do you want to PowerLevel10K?" p10k
@@ -224,6 +226,10 @@ fi
 
 if [ "$p10k" == "Y" ]; then
     execute_script "p10k.sh"
+fi
+
+if [ "$dotsb" == "Y" ]; then
+    execute_script "dotfiles-beta.sh"
 fi
 
 if [ "$dots" == "Y" ]; then

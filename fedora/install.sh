@@ -67,6 +67,7 @@ LOG="install-$(date +%d-%H%M%S).log"
 # Initialize variables to store user responses
 bluetooth=""
 dots=""
+dotsb=""
 gtk_themes=""
 nvidia=""
 nwg=""
@@ -142,6 +143,8 @@ ask_yes_no "-Install nwg-look? (Theming app / lxappearance-like) WARNING Package
 printf "\n"
 ask_yes_no "-Installing on ASUS ROG Laptops?" rog
 printf "\n"
+ask_yes_no "-Do you want to clone the repo and install pre-configured beta Hyprland dotfiles?(beta for stable go to next the option)" dotsb
+printf "\n"
 ask_yes_no "-Do you want to download and install pre-configured Hyprland dotfiles?" dots
 printf "\n"
 ask_yes_no "-Do you want to PowerLevel10K?" p10k
@@ -199,6 +202,10 @@ if [ "$p10k" == "Y" ]; then
 fi
 
 execute_script "InputGroup.sh"
+
+if [ "$dotsb" == "Y" ]; then
+    execute_script "dotfiles-beta.sh"
+fi
 
 if [ "$dots" == "Y" ]; then
     execute_script "dotfiles.sh"
