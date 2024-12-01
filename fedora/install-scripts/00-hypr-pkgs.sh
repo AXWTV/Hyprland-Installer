@@ -43,8 +43,8 @@ hypr_package=(
   rofi-wayland
   slurp
   swappy
-  swayidle
-  SwayNotificationCenter
+  #swayidle
+  #SwayNotificationCenter
   tmux
   waybar
   wget
