@@ -7,6 +7,8 @@ fi
 
 zsh=(
 zsh
+nushell
+starship
 zsh-completions
 )
 
