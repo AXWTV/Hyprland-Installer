@@ -24,6 +24,7 @@ jq
 kitty
 kvantum
 lsd
+lazygit
 matugen-bin
 nano
 npm
@@ -42,11 +43,11 @@ qt6-svg
 rofi-lbonn-wayland-git 
 slurp 
 swappy 
-swayidle 
-swaylock-effects-git
-swaync 
+#swayidle 
+#swaylock-effects-git
+#swaync 
 swww 
-waybar
+#waybar
 wget
 wl-clipboard
 wlogout
