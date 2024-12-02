@@ -3,7 +3,9 @@
 # ZSH and oh-my-zsh & Optional Pokemon Color Scrips #
 
 zsh=(
-zsh 
+zsh
+nu
+starship
 util-linux
 )
 

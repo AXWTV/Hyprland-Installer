@@ -17,6 +17,8 @@ trs-sod/swaylock-effects
 alebastr/sway-extras
 erikreider/SwayNotificationCenter
 tofik/nwg-shell
+atim/starship
+atim/lazygit
 )
 
 

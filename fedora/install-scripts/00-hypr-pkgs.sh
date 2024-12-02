@@ -23,6 +23,7 @@ hypr_package=(
   kitty
   kvantum
   lsd
+  lazygit
   nano
   npm
   network-manager-applet
@@ -46,7 +47,7 @@ hypr_package=(
   #swayidle
   #SwayNotificationCenter
   tmux
-  waybar
+  #waybar
   wget
   wl-clipboard
   wlogout

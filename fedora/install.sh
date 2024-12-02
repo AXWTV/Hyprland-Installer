@@ -186,7 +186,7 @@ if [ "$xdph" == "Y" ]; then
 fi
 
 if [ "$zsh" == "Y" ]; then
-    execute_script "zsh.sh"
+    execute_script "shell.sh"
 fi
 
 if [ "$rog" == "Y" ]; then
