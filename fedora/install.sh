@@ -146,12 +146,12 @@ printf "\n"
 
 ask_yes_no "-Installing on ASUS ROG Laptops?" rog
 printf "\n"
-ask_yes_no "-Do you want to clone the repo and install pre-configured beta Hyprland dotfiles? (for stable go to next the option)" dotsb
+ask_yes_no "-Do you want to clone the repo and install pre-configured beta Hyprland dotfiles? (for stable press n" dotsb
 printf "\n"
 
 # Skip dotfiles download prompt if the user chose the beta
 if [ "$dotsb" == "Y" ]; then
-    echo "Skipping pre-configured Hyprland dotfiles download..."
+    echo "Using beta Dotfiles..."
 else
     printf "\n"
     ask_yes_no "-Do you want to download and install pre-configured Hyprland dotfiles?" dots
