@@ -40,31 +40,31 @@ done
 
 printf "\n"
 
-## Optional Pokemon color scripts
-while true; do
-    read -p "${CAT} Do you want to install Pokemon color scripts? (y/n): " choice
-    case "$choice" in
-        [Yy]*)
-            if [ -d "pokemon-colorscripts" ]; then
-                cd pokemon-colorscripts && git pull && sudo ./install.sh && cd ..
-            else
-                git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git &&
-                cd pokemon-colorscripts && sudo ./install.sh && cd ..
-            fi
-            sed -i '/#pokemon-colorscripts --no-title -s -r/s/^#//' assets/.zshrc >> "$LOG" 2>&1
-			echo "${NOTE} Pokemon Installation process completed" 2>&1 | tee -a "$LOG"
-            break
-            ;;
-        [Nn]*) 
-            echo "${ORANGE} You chose not to install Pokemon Color Scripts." 2>&1 | tee -a "$LOG"
-            break
-            ;;
-        *)
-            echo "Please enter 'y' for yes or 'n' for no." 2>&1 | tee -a "$LOG"
-            ;;
-    esac
-done
-
+# ## Optional Pokemon color scripts
+# while true; do
+#     read -p "${CAT} Do you want to install Pokemon color scripts? (y/n): " choice
+#     case "$choice" in
+#         [Yy]*)
+#             if [ -d "pokemon-colorscripts" ]; then
+#                 cd pokemon-colorscripts && git pull && sudo ./install.sh && cd ..
+#             else
+#                 git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git &&
+#                 cd pokemon-colorscripts && sudo ./install.sh && cd ..
+#             fi
+#             sed -i '/#pokemon-colorscripts --no-title -s -r/s/^#//' assets/.zshrc >> "$LOG" 2>&1
+# 			echo "${NOTE} Pokemon Installation process completed" 2>&1 | tee -a "$LOG"
+#             break
+#             ;;
+#         [Nn]*) 
+#             echo "${ORANGE} You chose not to install Pokemon Color Scripts." 2>&1 | tee -a "$LOG"
+#             break
+#             ;;
+#         *)
+#             echo "Please enter 'y' for yes or 'n' for no." 2>&1 | tee -a "$LOG"
+#             ;;
+#     esac
+# done
+# 
 printf "\n"
 
 # Install Oh My Zsh, plugins, and set zsh as default shell
