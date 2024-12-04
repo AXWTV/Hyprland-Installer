@@ -75,7 +75,7 @@ rog=""
 sddm=""
 thunar=""
 xdph=""
-zsh=""
+shell=""
 p10k=""
 
 # Define the directory where your scripts are located
@@ -137,16 +137,28 @@ ask_yes_no "-Install & configure SDDM log-in Manager plus (OPTIONAL) SDDM Theme?
 printf "\n"
 ask_yes_no "-Install XDG-DESKTOP-PORTAL-HYPRLAND? (for proper Screen Share ie OBS)" xdph
 printf "\n"
-ask_yes_no "-Install zsh & oh-my-zsh plus (OPTIONAL) pokemon-colorscripts?" zsh
+ask_yes_no "-Install zsh, oh-my-zsh & nushell (test for nushell)?" shell
 printf "\n"
-ask_yes_no "-Install nwg-look? (Theming app / lxappearance-like) WARNING Package takes abit long to install" nwg
-printf "\n"
+
+# disabled in favor of fedora copr
+#ask_yes_no "-Install nwg-look? (Theming app / lxappearance-like) WARNING Package takes abit long to install" nwg
+#printf "\n"
+
 ask_yes_no "-Installing on ASUS ROG Laptops?" rog
 printf "\n"
-ask_yes_no "-Do you want to clone the repo and install pre-configured beta Hyprland dotfiles?(beta for stable go to next the option)" dotsb
+ask_yes_no "-Do you want to clone the repo and install pre-configured beta Hyprland dotfiles? (for stable go to next the option)" dotsb
 printf "\n"
-ask_yes_no "-Do you want to download and install pre-configured Hyprland dotfiles?" dots
-printf "\n"
+if [ "$dotsb" == true ]; then
+    echo "Skipping pre-configured Hyprland dotfiles download..."
+else
+    printf "\n"
+    ask_yes_no "-Do you want to download and install pre-configured Hyprland dotfiles?" dots
+fi
+
+#printf "\n"
+#ask_yes_no "-Do you want to download and install pre-configured Hyprland dotfiles?" dots
+#printf "\n"
+
 ask_yes_no "-Do you want to PowerLevel10K?" p10k
 printf "\n"
 
@@ -185,7 +197,7 @@ if [ "$xdph" == "Y" ]; then
     execute_script "xdph.sh"
 fi
 
-if [ "$zsh" == "Y" ]; then
+if [ "$shell" == "Y" ]; then
     execute_script "shell.sh"
 fi
 
