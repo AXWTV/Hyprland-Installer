@@ -12,6 +12,7 @@
 # List of COPR repositories to be added and enabled
 COPR_REPOS=(
 solopasha/hyprland
+sneexy/zen-browser
 en4aew/desktop-tools
 trs-sod/swaylock-effects
 alebastr/sway-extras
