@@ -71,10 +71,14 @@ show_menu() {
     echo "│ [3]  Configure Bluetooth                             │"
     echo "│ [4]  Install & Configure SDDM                        │"
     echo "│ [5]  Install XDG-DESKTOP-PORTAL-HYPRLAND             │"
-    echo "│ [6]  Install zsh, oh-my-zsh & nushell                │"
-    echo "│ [7]  Install on ASUS ROG Laptops                     │"
-    echo "│ [8]  Clone repo and install pre-configured dotfiles  │"
-    echo "│ [9]  Install PowerLevel10K                           │"
+    echo "│ [6]  Check for NVIDIA GPU                            │"
+    echo "│ [7]  Install zsh, oh-my-zsh & nushell                │"
+    echo "│ [8]  Install on ASUS ROG Laptops                     │"
+    echo "│ [9]  Clone repo and install pre-configured dotfiles  │"
+    echo "│ [10] Install PowerLevel10K                           │"
+    echo "│ [11] Install AGS Hypr Packages                       │"
+    echo "│ [12] Install Fonts                                   │"
+    echo "│ [13] Install TMUX Plugins                            │"
     echo "│ [0]  Exit                                            │"
     echo "╰──────────────────────────────────────────────────────╯"
     echo -e "\e[0m"
@@ -103,16 +107,33 @@ while true; do
             execute_script "xdph.sh"
             ;;
         6)
-            execute_script "shell.sh"
+            read -p "Do you have any NVIDIA GPU in your system? (y/n): " nvidia
+            if [ "$nvidia" == "y" ]; then
+                execute_script "nvidia.sh"
+            else
+                execute_script "hyprland.sh"
+            fi
             ;;
         7)
-            execute_script "rog.sh"
+            execute_script "shell.sh"
             ;;
         8)
-            execute_script "dotfiles.sh"
+            execute_script "rog.sh"
             ;;
         9)
+            execute_script "dotfiles.sh"
+            ;;
+        10)
             execute_script "p10k.sh"
+            ;;
+        11)
+            execute_script "00-ags-pkgs.sh"
+            ;;
+        12)
+            execute_script "fonts.sh"
+            ;;
+        13)
+            execute_script "tmux.sh"
             ;;
         0)
             echo "Exiting"
