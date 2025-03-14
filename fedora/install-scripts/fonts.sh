@@ -37,70 +37,75 @@ for PKG1 in "${fonts[@]}"; do
   fi
 done
 
-# Directories for font installation
-FONT_DIR="$HOME/.local/share/fonts"
-LOG_FILE="$HOME/font_installation_log.txt"
+# List of available Nerd Fonts
+declare -a fonts=(
+    "FiraCode"
+    "Hack"
+    "JetBrainsMono"
+    "Mononoki"
+    "SourceCodePro"
+    "UbuntuMono"
+    "DejaVuSansMono"
+    "NotoSansMono"
+    "Meslo"
+    "Iosevka"
+    "CaskaydiaCove"
+    "Overpass"
+    "VictorMono"
+    "Symbols Nerd Font"
+    "FontAwesome"
+    "MaterialIcons"
+    "PowerlineSymbols"
+)
 
-# Create the fonts directory if it doesn't exist
-mkdir -p "$FONT_DIR"
-
-# Create or clear the log file
-> "$LOG_FILE"
-
-# Function to download and install fonts using curl
-install_font() {
-    FONT_URL=$1
-    FONT_NAME=$2
-    FONT_ARCHIVE=$3
-
-    echo "Downloading $FONT_NAME..."
-    curl -L "$FONT_URL" -o "$FONT_ARCHIVE"
-    if [ $? -ne 0 ]; then
-        echo "Error: Failed to download $FONT_NAME from $FONT_URL" >> "$LOG_FILE"
-        echo "$FONT_NAME failed to download."
-        return 1
-    fi
-    
-    echo "Extracting $FONT_NAME..."
-    mkdir -p "$FONT_DIR/$FONT_NAME"
-    unzip -q "$FONT_ARCHIVE" -d "$FONT_DIR/$FONT_NAME"
-    if [ $? -ne 0 ]; then
-        echo "Error: Failed to extract $FONT_NAME from $FONT_ARCHIVE" >> "$LOG_FILE"
-        echo "$FONT_NAME failed to extract."
-        rm "$FONT_ARCHIVE"
-        return 1
-    fi
-    
-    rm "$FONT_ARCHIVE"
-    echo "$FONT_NAME installed successfully!"
-    return 0
+# Function to display available fonts
+function display_fonts() {
+    echo "Available Nerd Fonts (separate multiple choices with spaces):"
+    for i in "${!fonts[@]}"; do
+        echo "$((i + 1)). ${fonts[i]}"
+    done
 }
 
-# Install Hack font (latest release)
-install_font "https://github.com/chrissimpkins/Hack/releases/latest/download/Hack.zip" "Hack" "Hack.zip"
+# Function to install the selected fonts
+function install_fonts() {
+    local font_names=("$@")
+    local font_dir="$HOME/.local/share/fonts"
 
-# Install Iosevka font (latest release)
-install_font "https://github.com/oble/isevka/releases/latest/download/ttf-iosevka.zip" "Iosevka" "ttf-iosevka.zip"
+    # Create font directory if it doesn't exist
+    mkdir -p "$font_dir"
 
-# Install Nerd Fonts Symbols Only (latest release)
-install_font "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip" "NerdFontsSymbolsOnly" "NerdFontsSymbolsOnly.zip"
+    for font_name in "${font_names[@]}"; do
+        echo "Installing $font_name..."
+        curl -L "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font_name}.zip" -o "${font_name}.zip"
+        unzip -o "${font_name}.zip" -d "$font_dir"
+        rm "${font_name}.zip"
+    done
 
-# Install JetBrainsMono font (latest release)
-install_font "https://github.com/JetBrains/JetBrainsMono/releases/latest/download/JetBrainsMono.zip" "JetBrainsMono" "JetBrainsMono.zip"
+    # Update font cache
+    fc-cache -f -v
 
-# Install Font Awesome (Free) (latest release)
-install_font "https://github.com/FortAwesome/Font-Awesome/releases/latest/download/fontawesome-free.zip" "FontAwesome" "fontawesome-free.zip"
+    echo "Selected fonts installed successfully!"
+}
 
-# Update font cache
-echo "Updating font cache..."
-fc-cache -fv
+# Main script execution
+echo "Welcome to the Nerd Fonts Installer!"
+display_fonts
 
-# List out fonts that failed to install
-echo "The following fonts failed to install:" >> "$LOG_FILE"
-grep "failed" "$LOG_FILE" || echo "All fonts installed successfully." >> "$LOG_FILE"
+# Prompt user for font choices
+read -p "Please enter the numbers of the fonts you want to install (separate with spaces): " -a font_choices
 
-# Display the log file content (optional)
-cat "$LOG_FILE"
-echo "Fonts installation complete!"
+# Validate input and collect selected fonts
+selected_fonts=()
+for choice in "${font_choices[@]}"; do
+    if [[ "$choice" -ge 1 && "$choice" -le ${#fonts[@]} ]]; then
+        selected_fonts+=("${fonts[$((choice - 1))]}")
+    else
+        echo "Invalid choice: $choice. Please run the script again."
+        exit 1
+    fi
+done
+
+# Install selected fonts
+install_fonts "${selected_fonts[@]}"
 
 clear
