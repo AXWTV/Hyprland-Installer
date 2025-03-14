@@ -122,7 +122,7 @@ while true; do
             ;;
         9)
             read -p "Do you want Beta-Dotfiles? (y/n): " betadot
-            if [ "$betadot" == "y"]; then
+            if [ "$betadot" == "y" ]; then
                 execute_script "dotfiles-beta.sh"
             else
                 execute_script "dotfiles.sh"
