@@ -121,7 +121,12 @@ while true; do
             execute_script "rog.sh"
             ;;
         9)
-            execute_script "dotfiles.sh"
+            read -p "Do you want Beta-Dotfiles? (y/n): " betadot
+            if [ "$betadot" == "y"]; then
+                execute_script "dotfiles-beta.sh"
+            else
+                execute_script "dotfiles.sh"
+            fi
             ;;
         10)
             execute_script "p10k.sh"
