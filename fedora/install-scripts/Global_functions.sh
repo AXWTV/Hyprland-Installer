@@ -24,19 +24,14 @@ set -e
 # Function for installing packages
 install_package() {
   for package in "$@"; do
-    # Checking if package is already installed
-    if sudo dnf list installed "$package" &>> /dev/null ; then
-      echo -e "${OK} $package is already installed. Skipping..."
+    # Package not installed
+    echo -e "${NOTE} Installing $package ..."
+    if sudo dnf install -y "$package" 2>&1 | tee -a "$LOG"; then
+      echo -e "\e[1A\e[K${OK} $package was installed."
     else
-      # Package not installed
-      echo -e "${NOTE} Installing $package ..."
-      if sudo dnf install -y "$package" 2>&1 | tee -a "$LOG"; then
-        echo -e "\e[1A\e[K${OK} $package was installed."
-      else
-        # Something is missing, exiting to review log
-        echo -e "\e[1A\e[K${ERROR} $package failed to install :( , please check the install.log. You may need to install manually! Sorry I have tried :("
-        exit 1
-      fi
+    # Something is missing, exiting to review log
+      echo -e "\e[1A\e[K${ERROR} $package failed to install :( , please check the install.log. You may need to install manually! Sorry I have tried :("
+      exit 1
     fi
   done
 }
