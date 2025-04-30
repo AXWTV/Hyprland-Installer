@@ -170,7 +170,6 @@ chmod +x install-scripts/*
 # Install hyprland packages
 execute_script "copr.sh"
 execute_script "00-hypr-pkgs.sh"
-execute_script "00-ags-pkgs.sh"
 execute_script "fonts.sh"
 execute_script "tmux.sh"
 
@@ -224,6 +223,8 @@ if [ "$dots" == "Y" ]; then
     execute_script "dotfiles.sh"
 
 fi
+
+execute_script "00-ags-pkgs.sh"
 
 clear
 
